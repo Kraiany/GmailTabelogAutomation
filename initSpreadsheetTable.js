@@ -27,13 +27,9 @@
  *                 if the sheet is new or has no rows.
  */
 function initializeSheetHeaders() {
-  // --- Configuration ---
-  const spreadSheetId = config().spreadSheetId;
-  const sheetName = config().sheetName;
-
   // --- Setup ---
-  const ss = SpreadsheetApp.openById(spreadSheetId);
-  const sheet = ss.getSheetByName(sheetName) || ss.insertSheet(sheetName);
+  const ss = SpreadsheetApp.openById(config().spreadSheetId);
+  const sheet = ss.getSheetByName(config().sheetName) || ss.insertSheet(config().sheetName);
 
   // Initialize headers if sheet is new/empty
   if (sheet.getLastRow() < 1) {
