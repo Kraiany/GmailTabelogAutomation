@@ -23,21 +23,21 @@
  * and initializes headers if the sheet is new or empty.
  * 
  * @return {Sheet} The Google Sheet object, initialized and ready for writing data.
- *                 Headers are appended with 11 standard columns for Tabelog reservation data
+ *                 Headers are appended with 13 standard columns for Tabelog reservation data
  *                 if the sheet is new or has no rows.
  */
 function initializeSheetHeaders() {
   // --- Configuration ---
-  const SPREADSHEET_ID = config().spreadSheetId;
-  const SHEET_NAME = config().sheetName;
+  const spreadSheetId = config().spreadSheetId;
+  const sheetName = config().sheetName;
 
   // --- Setup ---
-  const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
-  const sheet = ss.getSheetByName(SHEET_NAME) || ss.insertSheet(SHEET_NAME);
+  const ss = SpreadsheetApp.openById(spreadSheetId);
+  const sheet = ss.getSheetByName(sheetName) || ss.insertSheet(sheetName);
 
   // Initialize headers if sheet is new/empty
   if (sheet.getLastRow() < 1) {
-    sheet.appendRow([
+    const headers = [
       'Date Parsed', 
       'Diner Name', 
       'Phone', 
@@ -51,7 +51,8 @@ function initializeSheetHeaders() {
       'Booking ID',
       'Changes',
       'Cancellation reason'
-    ]);
+    ];
+    sheet.appendRow(headers);
   }
 
   return sheet;
