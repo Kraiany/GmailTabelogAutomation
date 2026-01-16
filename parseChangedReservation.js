@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2025 Kraiany
+ * Copyright (C) 2025 Kraiany,
+ * Dmytro Kovalov <dmytro.kovalov@gmail.com>
  *
  * This file is part of GmailTabelogAutomation.
  *
@@ -111,33 +112,34 @@ function parseChangedReservation(thread) {
     }
     
     // --- Step 3: Infer Year ---
-    let finalR
-
-    // Infer year for new date
-    let finalNewReservationYear = currentYear;
-    if (newDateMMDD !== 'N/A') {
+    // Infer year for original date
+    let finalReservationYear = currentYear;
+    if (dateMMDD !== 'N/A') {
         const currentMonth = dateParsed.getMonth() + 1; 
-        const reservationMonth = parseInt(newDateMMDD.substring(0, 2), 10);
+        const reservationMonth = parseInt(dateMMDD.substring(0, 2), 10);
         
         if (currentMonth === 12 && reservationMonth === 1) {
-            finalNewReservationYear = currentYear + 1;
+            finalReservationYear = currentYear + 1;
         }
-    }
-    const finalNewReservationDate = newDateMMDD !Changes';
-    // --- Step 4: Write the data to match the column structure (14 columns) ---
-    sheet.appendRow([
-      dateParsed,                                   // Col 1: Date Parsed
-      'change',                                     // Col 2: Request Type
-      dinerName,                                    // Col 3: Diner Name
-      phoneNumber,                                  // Col 4: Phone
-      finalReservationDate,                         // Col 5: Reservation Date
-      newTime,                                      // Col 6: Reservation Time (NEW)
-      finalNewReservationDate,
     }
     const finalReservationDate = dateMMDD !== 'N/A' 
       ? `${finalReservationYear}/${dateMMDD}` 
       : 'N/A';
-    const changes = changesLog.join('; ') || 'No Time/Count Change';
+
+    // Infer year for new date (if date changed)
+    let finalNewReservationYear = currentYear;
+    let finalNewReservationDate = 'N/A';
+    if (newDateMMDD !== 'N/A' && newDateMMDD !== dateMMDD.replace(/[^0-9/]/g, '').trim()) {
+        const currentMonth = dateParsed.getMonth() + 1; 
+        const newReservationMonth = parseInt(newDateMMDD.substring(0, 2), 10);
+        
+        if (currentMonth === 12 && newReservationMonth === 1) {
+            finalNewReservationYear = currentYear + 1;
+        }
+        finalNewReservationDate = `${finalNewReservationYear}/${newDateMMDD}`;
+    }
+
+    const changes = changesLog.join('; ') || 'No Changes';
     // --- Step 4: Write the data to match the column structure (14 columns) ---
     sheet.appendRow([
       dateParsed,                                   // Col 1: Date Parsed
@@ -146,7 +148,7 @@ function parseChangedReservation(thread) {
       phoneNumber,                                  // Col 4: Phone
       finalReservationDate,                         // Col 5: Reservation Date
       newTime,                                      // Col 6: Reservation Time (NEW)
-      "N/A",                                        // Col 7: New Reservation Date
+      finalNewReservationDate,                      // Col 7: New Reservation Date
       newTime,                                      // Col 8: New Reservation Time
       newGuestCount,                                // Col 9: Guest Count (NEW)
       coursePlan,                                   // Col 10: Course/Plan (Original value)
@@ -163,8 +165,8 @@ function parseChangedReservation(thread) {
       finalReservationDate: finalReservationDate,                          // Col 4: Reservation Date
       time: newTime,                                          // Col 5: Reservation Time
       guestCount: newGuestCount,                                    // Col 6: Guest Count
-      coursePlan: 'CANCELLED',                                   // Col 7: Course/Plan (Status)
-      table: 'CANCELLED',                                   // Col 8: Table (Status)
+      coursePlan: coursePlan,                                      // Col 7: Course/Plan
+      table: tableInfo,                                            // Col 8: Table
       bookingId: bookingId,                                     // Col 9: Booking ID
       changes: changes,
       cancellationReason: "N/A"                             // Col 11: Cancellation Reason
