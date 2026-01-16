@@ -77,7 +77,18 @@ function parseChangedReservation(thread) {
     // --- Step 2: Parse NEW values & Log Changes ---
     let newTime = timeFull;
     let newGuestCount = guestCountFull;
+    let newDateMMDD = dateMMDD;
     let changesLog = [];
+
+    // Date Change
+    const dateChangeMatch = dateMMDD.match(/(\d{2}\/\d{2})\s*→\s*(\d{2}\/\d{2})/);
+    if (dateChangeMatch) {
+      newDateMMDD = dateChangeMatch[2];
+      changesLog.push(`Date: ${dateChangeMatch[1]} -> ${newDateMMDD}`);
+    } else {
+      // If no change, clean up the original value to just MM/DD
+      newDateMMDD = dateMMDD.replace(/[^0-9/]/g, '').trim();
+    }
 
     // Time Change
     const timeChangeMatch = timeFull.match(/(\d{1,2}:\d{2})\s*→\s*(\d{1,2}:\d{2})/);
@@ -100,14 +111,28 @@ function parseChangedReservation(thread) {
     }
     
     // --- Step 3: Infer Year ---
-    let finalReservationYear = currentYear;
-    if (dateMMDD !== 'N/A') {
+    let finalR
+
+    // Infer year for new date
+    let finalNewReservationYear = currentYear;
+    if (newDateMMDD !== 'N/A') {
         const currentMonth = dateParsed.getMonth() + 1; 
-        const reservationMonth = parseInt(dateMMDD.substring(0, 2), 10);
+        const reservationMonth = parseInt(newDateMMDD.substring(0, 2), 10);
         
         if (currentMonth === 12 && reservationMonth === 1) {
-            finalReservationYear = currentYear + 1;
+            finalNewReservationYear = currentYear + 1;
         }
+    }
+    const finalNewReservationDate = newDateMMDD !Changes';
+    // --- Step 4: Write the data to match the column structure (14 columns) ---
+    sheet.appendRow([
+      dateParsed,                                   // Col 1: Date Parsed
+      'change',                                     // Col 2: Request Type
+      dinerName,                                    // Col 3: Diner Name
+      phoneNumber,                                  // Col 4: Phone
+      finalReservationDate,                         // Col 5: Reservation Date
+      newTime,                                      // Col 6: Reservation Time (NEW)
+      finalNewReservationDate,
     }
     const finalReservationDate = dateMMDD !== 'N/A' 
       ? `${finalReservationYear}/${dateMMDD}` 
