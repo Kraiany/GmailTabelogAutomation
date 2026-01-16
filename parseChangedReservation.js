@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2025 Kraiany
+ * Copyright (C) 2025 Kraiany,
+ * Dmytro Kovalov <dmytro.kovalov@gmail.com>
  *
  * This file is part of GmailTabelogAutomation.
  *
@@ -111,28 +112,15 @@ function parseChangedReservation(thread) {
     }
     
     // --- Step 3: Infer Year ---
-    let finalR
-
-    // Infer year for new date
-    let finalNewReservationYear = currentYear;
-    if (newDateMMDD !== 'N/A') {
+    // Infer year for original date
+    let finalReservationYear = currentYear;
+    if (dateMMDD !== 'N/A') {
         const currentMonth = dateParsed.getMonth() + 1; 
-        const reservationMonth = parseInt(newDateMMDD.substring(0, 2), 10);
+        const reservationMonth = parseInt(dateMMDD.substring(0, 2), 10);
         
         if (currentMonth === 12 && reservationMonth === 1) {
-            finalNewReservationYear = currentYear + 1;
+            finalReservationYear = currentYear + 1;
         }
-    }
-    const finalNewReservationDate = newDateMMDD !Changes';
-    // --- Step 4: Write the data to match the column structure (14 columns) ---
-    sheet.appendRow([
-      dateParsed,                                   // Col 1: Date Parsed
-      'change',                                     // Col 2: Request Type
-      dinerName,                                    // Col 3: Diner Name
-      phoneNumber,                                  // Col 4: Phone
-      finalReservationDate,                         // Col 5: Reservation Date
-      newTime,                                      // Col 6: Reservation Time (NEW)
-      finalNewReservationDate,
     }
     const finalReservationDate = dateMMDD !== 'N/A' 
       ? `${finalReservationYear}/${dateMMDD}` 

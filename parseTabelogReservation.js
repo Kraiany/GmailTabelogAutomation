@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2025 Kraiany
+ * Copyright (C) 2025 Kraiany,
+ * Dmytro Kovalov <dmytro.kovalov@gmail.com>
  *
  * This file is part of GmailTabelogAutomation.
  *
