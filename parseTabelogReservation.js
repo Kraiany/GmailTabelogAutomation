@@ -22,32 +22,8 @@
  * Subject example: 【新規予約】新しい予約が入りました。 (1月11日(日) 14:00- 2名様)【食べログネット予約】
  */
 function parseTabelogReservation(thread) {
-  // --- Configuration ---
-  const SPREADSHEET_ID = config().spreadSheetId; // <-- IMPORTANT: Replace with your actual Sheet ID
-  const SHEET_NAME = config().sheetName;
-  // // Use a label you create to easily find these individual confirmation emails
-  // const LABEL_NAME = config().label.create; 
-
   // --- Setup ---
-  const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
-  const sheet = ss.getSheetByName(SHEET_NAME) || ss.insertSheet(SHEET_NAME);
-
-  // Define the row headers if the sheet is new/empty
-  if (sheet.getLastRow() < 1) {
-    sheet.appendRow([
-      'Date Parsed', 
-      'Diner Name', 
-      'Phone', 
-      'Reservation Date', 
-      'Reservation Time', 
-      'Guest Count', 
-      'Course/Plan', 
-      'Table', 
-      'Booking ID',
-      'Changes',
-      'Cancellation reason'
-    ]);
-  }
+  const sheet = initializeSheetHeaders();
 
   // Function to extract value using a label (key) and colon (：)
 /**
@@ -135,13 +111,16 @@ const extractValue = (body, key) => {
       dateParsed, 
       dinerName, 
       phoneNumber, 
-      finalReservationDate, 
+      finalReservationDate,
       time, 
+      "N/A",
+      "N/A",
       guestCount, 
       coursePlan, 
       tableInfo, 
       bookingId,
-      "",""
+      "N/A",
+      ""
     ]);
 
     const calendarEntry = {
