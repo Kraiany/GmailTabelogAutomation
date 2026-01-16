@@ -109,6 +109,7 @@ const extractValue = (body, key) => {
     // --- Step 2: Write data to the sheet ---
     sheet.appendRow([
       dateParsed, 
+      'new',
       dinerName, 
       phoneNumber, 
       finalReservationDate,

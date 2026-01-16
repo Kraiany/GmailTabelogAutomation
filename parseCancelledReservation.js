@@ -104,21 +104,22 @@ function parseCancelledReservation() {
       ? `${finalReservationYear}/${dateMMDD}` 
       : 'N/A';
 
-    // --- Step 3: Write the data to match the column structure (13 columns) ---
+    // --- Step 3: Write the data to match the column structure (14 columns) ---
     sheet.appendRow([
       dateParsed,                                    // Col 1: Date Parsed
-      dinerName,                                     // Col 2: Diner Name
-      phoneNumber,                                   // Col 3: Phone
-      finalReservationDate,                          // Col 4: Reservation Date
-      time,                                          // Col 5: Reservation Time
-      "N/A",                                         // Col 6: New Reservation Date
-      "N/A",                                         // Col 7: New Reservation Time
-      guestCount,                                    // Col 8: Guest Count
-      'CANCELLED',                                   // Col 9: Course/Plan (Status)
-      'CANCELLED',                                   // Col 10: Table (Status)
-      bookingId,                                     // Col 11: Booking ID
-      "N/A",                                         // Col 12: Changes
-      cancellationReason                             // Col 13: Cancellation Reason
+      'cancel',                                      // Col 2: Request Type
+      dinerName,                                     // Col 3: Diner Name
+      phoneNumber,                                   // Col 4: Phone
+      finalReservationDate,                          // Col 5: Reservation Date
+      time,                                          // Col 6: Reservation Time
+      "N/A",                                         // Col 7: New Reservation Date
+      "N/A",                                         // Col 8: New Reservation Time
+      guestCount,                                    // Col 9: Guest Count
+      'CANCELLED',                                   // Col 10: Course/Plan (Status)
+      'CANCELLED',                                   // Col 11: Table (Status)
+      bookingId,                                     // Col 12: Booking ID
+      "N/A",                                         // Col 13: Changes
+      cancellationReason                             // Col 14: Cancellation Reason
     ]);
 
     const calendarEntry = {

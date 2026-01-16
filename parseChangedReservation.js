@@ -113,21 +113,22 @@ function parseChangedReservation(thread) {
       ? `${finalReservationYear}/${dateMMDD}` 
       : 'N/A';
     const changes = changesLog.join('; ') || 'No Time/Count Change';
-    // --- Step 4: Write the data to match the column structure (13 columns) ---
+    // --- Step 4: Write the data to match the column structure (14 columns) ---
     sheet.appendRow([
       dateParsed,                                   // Col 1: Date Parsed
-      dinerName,                                    // Col 2: Diner Name
-      phoneNumber,                                  // Col 3: Phone
-      finalReservationDate,                         // Col 4: Reservation Date
-      newTime,                                      // Col 5: Reservation Time (NEW)
-      "N/A",                                        // Col 6: New Reservation Date
-      newTime,                                      // Col 7: New Reservation Time
-      newGuestCount,                                // Col 8: Guest Count (NEW)
-      coursePlan,                                   // Col 9: Course/Plan (Original value)
-      tableInfo,                                    // Col 10: Table (Original value)
-      bookingId,                                    // Col 11: Booking ID
-      changes,                                      // Col 12: Changes Log
-      ""                                            // Col 13: Cancellation Reason
+      'change',                                     // Col 2: Request Type
+      dinerName,                                    // Col 3: Diner Name
+      phoneNumber,                                  // Col 4: Phone
+      finalReservationDate,                         // Col 5: Reservation Date
+      newTime,                                      // Col 6: Reservation Time (NEW)
+      "N/A",                                        // Col 7: New Reservation Date
+      newTime,                                      // Col 8: New Reservation Time
+      newGuestCount,                                // Col 9: Guest Count (NEW)
+      coursePlan,                                   // Col 10: Course/Plan (Original value)
+      tableInfo,                                    // Col 11: Table (Original value)
+      bookingId,                                    // Col 12: Booking ID
+      changes,                                      // Col 13: Changes Log
+      ""                                            // Col 14: Cancellation Reason
     ]);
 
     const calendarEntry = {
