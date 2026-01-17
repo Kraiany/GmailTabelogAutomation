@@ -159,17 +159,17 @@ function parseChangedReservation(thread) {
     ]);
 
     const calendarEntry = {
-      dateParsed: dateParsed,                                    // Col 1: Date Parsed
+      dateParsed: dateParsed,             // Col 1: Date Parsed
       dinerName: dinerName,
-      phoneNumber: phoneNumber,                                   // Col 3: Phone
-      finalReservationDate: finalNewReservationDate,                          // Col 4: Reservation Date
-      time: newTime,                                          // Col 5: Reservation Time
-      guestCount: newGuestCount,                                    // Col 6: Guest Count
-      coursePlan: coursePlan,                                      // Col 7: Course/Plan
-      table: tableInfo,                                            // Col 8: Table
-      bookingId: bookingId,                                     // Col 9: Booking ID
+      phoneNumber: phoneNumber,           // Col 3: Phone
+      finalReservationDate: finalNewReservationDate, // Col 4: Reservation Date
+      time: newTime,                      // Col 5: Reservation Time
+      guestCount: newGuestCount,          // Col 6: Guest Count
+      coursePlan: coursePlan,             // Col 7: Course/Plan
+      table: tableInfo,                   // Col 8: Table
+      bookingId: bookingId,               // Col 9: Booking ID
       changes: changes,
-      cancellationReason: "N/A"                             // Col 11: Cancellation Reason
+      cancellationReason: "N/A"           // Col 11: Cancellation Reason
     };
     Logger.log("Updating reservation:" + JSON.stringify(calendarEntry));
     processChangedReservation(calendarEntry);
