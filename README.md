@@ -96,7 +96,7 @@ Notes:
 
 ## Author
 
-Kraiany (repository owner)
+Dmytro Kovalov <dmytro.kovalov@gmail.com>, NPO Kraiany
 
 ## License
 
