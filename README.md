@@ -20,8 +20,22 @@ Automates ingestion of Tabelog reservation emails, writes structured rows to a G
    - `SHEET_NAME` — name of the sheet/tab to use
    - `CALENDAR_ID` — target Calendar ID for events
    - `SLACK_WEBHOOK_URL` — (optional) Slack incoming webhook URL for notifications
-5. Create Gmail labels to match `globalConfig.js` values (defaults: `TabelogInbox`, `TabelogRegistered`, `contact`). Attach incoming messages to `TabelogInbox`.
-6. Deploy: run `masterTabelogProcessor` in the Apps Script editor to verify processing. Use Logger logs and Executions to debug.
+   - `LABEL_NEW` — Gmail label for new reservation notifications (default: `TabelogInbox`)
+   - `LABEL_DONE` — Gmail label for processed reservations (default: `TabelogRegistered`)
+   - `LABELS_TO_DELETE` — comma-separated list of Gmail labels to remove from threads after processing (default: `contact`). Example: `contact, temp, archive`
+5. Create Gmail labels to match the `LABEL_NEW`, `LABEL_DONE`, and `LABELS_TO_DELETE` values you set. Attach incoming messages to the `LABEL_NEW` label (e.g., `TabelogInbox`).
+6. Create a Gmail filter to automatically apply the `LABEL_NEW` label to incoming Tabelog emails:
+   - Open Gmail and go to **Settings > Filters and Blocked Addresses > Create a new filter**.
+   - In the search criteria:
+     - Set "From" field to: `info@mail.tabelog.com` (Tabelog's notification email)
+     - Optionally add: "Has the words" = `新しい予約が入りました OR 予約内容が変更されました OR 予約内容がキャンセルされました OR ネット予約一覧` to filter specific Tabelog email types
+   - Click **Create filter**.
+   - Check the box: **Apply the label** and select your `LABEL_NEW` label (e.g., `TabelogInbox`).
+   - (Optional) Check **Never send it to Spam** to ensure emails don't get filtered incorrectly.
+   - Click **Create filter**.
+   
+   Now all new Tabelog emails will automatically be tagged with `LABEL_NEW` and routed to the processor.
+7. Deploy: run `masterTabelogProcessor` in the Apps Script editor to verify processing. Use Logger logs and Executions to debug.
 
 ## Using clasp for local development and GitHub sync
 

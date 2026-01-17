@@ -24,9 +24,12 @@ function config() {
 
     return {
       label: {
-        new: "TabelogInbox",
-        done: "TabelogRegistered",
-        contact: "contact"
+        new: scriptProperties.getProperty("LABEL_NEW"),
+        done: scriptProperties.getProperty("LABEL_DONE"),
+        labelsToDelete: (scriptProperties.getProperty("LABELS_TO_DELETE") || "")
+          .split(",")
+          .map(label => label.trim())
+          .filter(label => label.length > 0)
       },
       spreadSheetId: scriptProperties.getProperty("SPREADSHEET_ID"),
       sheetName: scriptProperties.getProperty("SHEET_NAME"),

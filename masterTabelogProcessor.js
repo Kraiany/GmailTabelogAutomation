@@ -26,7 +26,7 @@ const SHEET_NAME = config().sheetName;
 // --- Function Router (The only function you need to schedule) ---
 function masterTabelogProcessor() {
   const label = GmailApp.getUserLabelByName(config().label.new);
-  const contactLabel = GmailApp.getUserLabelByName(config().label.contact);
+  const labelsToDelete = config().label.labelsToDelete;
   const registeredLabel = GmailApp.getUserLabelByName(config().label.done);
 
   if (!label) {
@@ -81,7 +81,15 @@ function masterTabelogProcessor() {
       // Mark as read and remove the master label after successful processing
       thread.markRead();
       thread.removeLabel(label); // Optional: Keep the label for filtering later
-      thread.removeLabel(contactLabel);
+      
+      // Remove all labels to delete
+      labelsToDelete.forEach(labelName => {
+        const deleteLabel = GmailApp.getUserLabelByName(labelName);
+        if (deleteLabel) {
+          thread.removeLabel(deleteLabel);
+        }
+      });
+      
       thread.addLabel(registeredLabel);
     } else {
       Logger.log(`WARNING: Unhandled subject found: ${subject}`);
