@@ -162,7 +162,7 @@ function parseChangedReservation(thread) {
       dateParsed: dateParsed,                                    // Col 1: Date Parsed
       dinerName: dinerName,
       phoneNumber: phoneNumber,                                   // Col 3: Phone
-      finalReservationDate: finalReservationDate,                          // Col 4: Reservation Date
+      finalReservationDate: finalNewReservationDate,                          // Col 4: Reservation Date
       time: newTime,                                          // Col 5: Reservation Time
       guestCount: newGuestCount,                                    // Col 6: Guest Count
       coursePlan: coursePlan,                                      // Col 7: Course/Plan

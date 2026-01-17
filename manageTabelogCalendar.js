@@ -58,7 +58,11 @@ function findEventByBookingId(calendar, bookingId) {
   const future = new Date(now.getTime());
   future.setDate(now.getDate() + lookaheadDays);
 
-  const events = calendar.getEvents(now, future);
+  const past = new Date(now.getTime());
+  past.setDate(now.getDate() - 180);
+
+  // const events = calendar.getEvents(now, future);
+  const events = calendar.getEvents(past, future);
 
   for (const event of events) {
     const description = event.getDescription() || '';
