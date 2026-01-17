@@ -2,6 +2,16 @@
 
 Automates ingestion of Tabelog reservation emails, writes structured rows to a Google Sheet, creates/updates/cancels Google Calendar events, and posts Slack notifications.
 
+## About Tabelog
+
+**Tabelog** (食べログ) is a popular Japanese restaurant review and reservation platform. It allows diners to discover restaurants, read reviews, make reservations online, and receive confirmation and update notifications via email.
+
+**Important legal notes:**
+- Tabelog does not provide a public API for accessing reservation data.
+- Terms of service explicitly prohibit web-scraping of Tabelog pages.
+- Instead, this automation leverages the **email notifications** that Tabelog sends directly to restaurant owners when reservations are made, changed, or cancelled. These emails contain structured reservation information (diner name, party size, date, time, booking ID, etc.).
+- This system processes those emails to keep your Google Sheets, Calendar, and Slack in sync—a fully compliant approach that respects Tabelog's terms of service.
+
 ## Quick overview
 
 - Entrypoint: `masterTabelogProcessor.js` (schedule this as a time-driven trigger or run manually)
