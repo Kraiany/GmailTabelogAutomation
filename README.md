@@ -30,9 +30,11 @@ Automates ingestion of Tabelog reservation emails, writes structured rows to a G
    - `SHEET_NAME` — name of the sheet/tab to use
    - `CALENDAR_ID` — target Calendar ID for events
    - `SLACK_WEBHOOK_URL` — (optional) Slack incoming webhook URL for notifications
+   - `SLACK_SEND` - (Boolean) if set to false, notification toSlack are not sent
    - `LABEL_NEW` — Gmail label for new reservation notifications (default: `TabelogInbox`)
    - `LABEL_DONE` — Gmail label for processed reservations (default: `TabelogRegistered`)
    - `LABELS_TO_DELETE` — comma-separated list of Gmail labels to remove from threads after processing (default: `contact`). Example: `contact, temp, archive`
+   - `ERROR_EMAIL_ADDRESS` - email address to send error notifications
 5. Create Gmail labels to match the `LABEL_NEW`, `LABEL_DONE`, and `LABELS_TO_DELETE` values you set. Attach incoming messages to the `LABEL_NEW` label (e.g., `TabelogInbox`).
 6. Create a Gmail filter to automatically apply the `LABEL_NEW` label to incoming Tabelog emails:
    - Open Gmail and go to **Settings > Filters and Blocked Addresses > Create a new filter**.
