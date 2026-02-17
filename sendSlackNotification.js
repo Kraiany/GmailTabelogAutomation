@@ -21,11 +21,14 @@
 const SLACK_WEBHOOK_URL = config().slackWebhookUrl;
 /**
  * Sends a notification message to Slack.
+ * Function uses global variable SLACK_SEND (Bool) - if set to false, Slack message is not sent. For use during debuging.
+ * 
  * @param {string} title The main title of the notification (e.g., "[New Reservation]").
  * @param {object} entry The calendar entry object containing reservation data.
  * @param {string} color The color bar for the Slack message (e.g., 'good', 'warning', 'danger').
  */
 function sendSlackNotification(title, entry, color) {
+  if (config().slackSend === false) { return }; // Disable during debugging
   // if (SLACK_WEBHOOK_URL === config().slackWebhookUrl) {
   //   Logger.log("Slack Webhook URL is not configured. Skipping notification.");
   //   return;

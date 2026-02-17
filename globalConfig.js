@@ -34,7 +34,10 @@ function config() {
       spreadSheetId: scriptProperties.getProperty("SPREADSHEET_ID"),
       sheetName: scriptProperties.getProperty("SHEET_NAME"),
       calendarId: scriptProperties.getProperty("CALENDAR_ID"),
-      slackWebhookUrl: scriptProperties.getProperty("SLACK_WEBHOOK_URL")
+      slackWebhookUrl: scriptProperties.getProperty("SLACK_WEBHOOK_URL"),
+      slackSend: scriptProperties.getProperty("SLACK_SEND"),
+      errorEmailAddress: scriptProperties.getProperty("ERROR_EMAIL_ADDRESS")
+
     }  
   } catch (err) {
       console.log("Failed with error %s", err.message);

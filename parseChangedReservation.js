@@ -25,6 +25,16 @@
  *
  */
 function parseChangedReservation(thread) {
+
+  function sendError (errorText) {
+    Logger.log('Error: ' + errorText);
+    // You might also want to send an email to yourself with the
+    const recipient = config().errorEmailAddress;
+    const subject = "[ERROR] GAS Script Error Notification";
+    const body = `Error message: ${errorText}`;
+    Logger.log(`Mail body: ${body}`);
+    MailApp.sendEmail(recipient, subject, body);
+  }
   // --- Setup ---
   const sheet = initializeSheetHeaders();
 
@@ -85,6 +95,7 @@ function parseChangedReservation(thread) {
     const dateChangeMatch = dateMMDD.match(/(\d{2}\/\d{2})\s*→\s*(\d{2}\/\d{2})/);
     if (dateChangeMatch) {
       newDateMMDD = dateChangeMatch[2];
+      Logger.log(`Date changed: ${dateChangeMatch[1]} -> ${newDateMMDD}`);
       changesLog.push(`Date: ${dateChangeMatch[1]} -> ${newDateMMDD}`);
     } else {
       // If no change, clean up the original value to just MM/DD
@@ -129,6 +140,9 @@ function parseChangedReservation(thread) {
     // Infer year for new date (if date changed)
     let finalNewReservationYear = currentYear;
     let finalNewReservationDate = 'N/A';
+    
+    Logger.log(`${dateMMDD} -- ${newDateMMDD}`);
+
     if (newDateMMDD !== 'N/A' && newDateMMDD !== dateMMDD.replace(/[^0-9/]/g, '').trim()) {
         const currentMonth = dateParsed.getMonth() + 1; 
         const newReservationMonth = parseInt(newDateMMDD.substring(0, 2), 10);
@@ -137,6 +151,8 @@ function parseChangedReservation(thread) {
             finalNewReservationYear = currentYear + 1;
         }
         finalNewReservationDate = `${finalNewReservationYear}/${newDateMMDD}`;
+    } else {
+          finalNewReservationDate = `${finalReservationYear}/${newDateMMDD}`;
     }
 
     const changes = changesLog.join('; ') || 'No Changes';
@@ -157,7 +173,19 @@ function parseChangedReservation(thread) {
       changes,                                      // Col 13: Changes Log
       ""                                            // Col 14: Cancellation Reason
     ]);
+  // report error if finalNewReservationDate is empty or N/A
+    if (finalNewReservationDate === 'N/A' || finalNewReservationDate === '') {
+      const error = `finalNewReservationDate is empty or N/A. Please investigate! 
+      
+      Calendar Entry 
+      
+      ${calendarEntry}`;
+      
+      sendError(error);
+      throw error
+    }
 
+    // --- Step 5: Calendar Update ---
     const calendarEntry = {
       dateParsed: dateParsed,             // Col 1: Date Parsed
       dinerName: dinerName,
