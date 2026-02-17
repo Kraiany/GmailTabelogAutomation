@@ -27,12 +27,11 @@
 function parseChangedReservation(thread) {
 
   function sendError (errorText) {
-    Logger.log('Error: ' + errorText);
     // You might also want to send an email to yourself with the
     const recipient = config().errorEmailAddress;
     const subject = "[ERROR] GAS Script Error Notification";
     const body = `Error message: ${errorText}`;
-    Logger.log(`Mail body: ${body}`);
+    Logger.log(`[ERROR] Mail body: ${body}`);
     MailApp.sendEmail(recipient, subject, body);
   }
   // --- Setup ---
@@ -141,8 +140,6 @@ function parseChangedReservation(thread) {
     let finalNewReservationYear = currentYear;
     let finalNewReservationDate = 'N/A';
     
-    Logger.log(`${dateMMDD} -- ${newDateMMDD}`);
-
     if (newDateMMDD !== 'N/A' && newDateMMDD !== dateMMDD.replace(/[^0-9/]/g, '').trim()) {
         const currentMonth = dateParsed.getMonth() + 1; 
         const newReservationMonth = parseInt(newDateMMDD.substring(0, 2), 10);
@@ -175,12 +172,15 @@ function parseChangedReservation(thread) {
     ]);
   // report error if finalNewReservationDate is empty or N/A
     if (finalNewReservationDate === 'N/A' || finalNewReservationDate === '') {
-      const error = `finalNewReservationDate is empty or N/A. Please investigate! 
+      const error = `
+      finalNewReservationDate is empty or N/A. Please investigate! 
       
-      Calendar Entry 
+      CALENDAR ENTRY:
+      ${JSON.stringify(calendarEntry)}
       
-      ${calendarEntry}`;
-      
+      THREAD DATA:
+      ${thread}
+    `;
       sendError(error);
       throw error
     }

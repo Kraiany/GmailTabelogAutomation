@@ -21,7 +21,7 @@
 const SLACK_WEBHOOK_URL = config().slackWebhookUrl;
 /**
  * Sends a notification message to Slack.
- * Function uses global variable SLACK_SEND (Bool) - if set to false, Slack message is not sent. For use during debuging.
+ * Function uses scriptProperty SLACK_SEND (Bool) - if set to false, Slack message is not sent. For use during debuging.
  * 
  * @param {string} title The main title of the notification (e.g., "[New Reservation]").
  * @param {object} entry The calendar entry object containing reservation data.
