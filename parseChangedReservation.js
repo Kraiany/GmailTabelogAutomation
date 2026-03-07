@@ -112,13 +112,16 @@ function parseChangedReservation(thread) {
     }
 
     // Guest Count Change
-    const countChangeMatch = guestCountFull.match(/(\d+)\s*→\s*(\d+)/);
+    Logger.log(`guests: ${guestCountFull}`);
+    const countChangeMatch = guestCountFull.match(/(\d+)名\s*→\s*(\d+)/);
     if (countChangeMatch) {
       newGuestCount = countChangeMatch[2]; 
+      Logger.log(`New guest count: ${newGuestCount}`);
       changesLog.push(`Guests: ${countChangeMatch[1]} -> ${newGuestCount}`);
     } else {
        // If no change, clean up the original value to just digits
        newGuestCount = guestCountFull.replace(/[^0-9]/g, '').trim();
+       Logger.log(`No change in guest count: ${newGuestCount}`);
     }
     
     // --- Step 3: Infer Year ---
