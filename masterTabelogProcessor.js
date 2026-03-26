@@ -70,7 +70,7 @@ function masterTabelogProcessor() {
       parseChangedReservation(thread);
       handled = true;
 
-    } else if (subject.includes('予約内容がキャンセルされました')) {
+    } else if (subject.includes('予約がキャンセルされました')) { //予約がキャンセルされました。
       // 4. Reservation Cancellation
       Logger.log(`Routing thread (Subject: ${subject}) to Cancellation parser.`);
       parseCancelledReservation(thread);
