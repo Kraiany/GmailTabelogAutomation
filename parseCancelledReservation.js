@@ -25,7 +25,7 @@
  * Parses a single Tabelog reservation CANCELLATION notification email.
  * OUTPUT COLUMNS ALIGN WITH parseSingleTabelogReservation() plus a reason column.
  */
-function parseCancelledReservation() {
+function parseCancelledReservation(thread) {
   // --- Configuration ---
   const LABEL_NAME = config().label.cancel;
 
