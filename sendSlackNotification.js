@@ -28,7 +28,7 @@ const SLACK_WEBHOOK_URL = config().slackWebhookUrl;
  * @param {string} color The color bar for the Slack message (e.g., 'good', 'warning', 'danger').
  */
 function sendSlackNotification(title, entry, color) {
-  if (config().slackSend === false) { return }; // Disable during debugging
+  if (config().slackSend === 'false') { return }; // Disable during debugging
   // if (SLACK_WEBHOOK_URL === config().slackWebhookUrl) {
   //   Logger.log("Slack Webhook URL is not configured. Skipping notification.");
   //   return;
